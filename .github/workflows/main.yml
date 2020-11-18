@@ -1,0 +1,25 @@
+name: CI
+on: [push]
+
+env:
+  PROJECT: demo-action
+  APP_NAME: myapp
+  RUNNER_OS: linux
+
+jobs:
+  build:
+    name: Build and Push
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Lucas Test Build Action
+      uses: lstocchi/buildah-action@0.0.9
+      with:
+        image: testdockerize
+        dockerfiles: |
+          ./Dockerfile
+    - name: Check image created
+      run: |
+        buildah images
